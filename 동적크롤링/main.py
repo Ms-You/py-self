@@ -28,9 +28,6 @@ browser.execute_script("arguments[0].click();", shopping_home_search_button)
 search = find(wait, "input[name=query]")
 search.send_keys("아이폰 케이스\n")
 
-# search_button = find(wait, "button._searchInput_button_search_pA3ap")
-# search_button.send_keys(Keys.ENTER)
-
 time.sleep(5)
 
 browser.close()
