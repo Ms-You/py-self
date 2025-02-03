@@ -57,24 +57,52 @@ search.send_keys("\n")
 wait.until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "div[class^=basicProductCard_basic_product_card__TdrHT]")))  # div로 변경
 time.sleep(1)
 
-# 스크롤
-for i in range(8):
-    browser.execute_script("window.scrollBy(0, " + str((i+1) * 1000) + ")")
-    time.sleep(1)
+# # 스크롤
+# for i in range(8):
+#     browser.execute_script("window.scrollBy(0, " + str((i+1) * 1000) + ")")
+#     time.sleep(1)
 
 product_list = browser.find_elements(By.CSS_SELECTOR, "div[class^=basicProductCard_basic_product_card__TdrHT]")
 
-for product in product_list:
-    # 광고 제외
-    advertisement_buttons = product.find_elements(By.CSS_SELECTOR, "div[class^=basicProductCardInformation_advertisement_area__HzaQ_]")
-    if advertisement_buttons:  # 광고 요소가 존재하면
-        continue
+# for product in product_list:
+#     # 광고 제외
+#     advertisement_buttons = product.find_elements(By.CSS_SELECTOR, "div[class^=basicProductCardInformation_advertisement_area__HzaQ_]")
+#     if advertisement_buttons:  # 광고 요소가 존재하면
+#         continue
 
-    # 상품명 추출
-    title_element = product.find_element(By.CSS_SELECTOR, "strong[class^=basicProductCardInformation_title__Bc_Ng]")
-    product_name = title_element.text
-    print(f"상품명: {product_name}")
+#     # 상품명 추출
+#     title_element = product.find_element(By.CSS_SELECTOR, "strong[class^=basicProductCardInformation_title__Bc_Ng]")
+#     product_name = title_element.text
+#     print(f"상품명: {product_name}")
 
+
+# 첫 번째 상품 클릭
+if product_list:
+    first_product_link = product_list[0].find_element(By.CSS_SELECTOR, "a.basicProductCard_link__urzND")
+    first_product_link.click()
+else:
+    print("상품 목록이 비어 있습니다.")
+
+# 새탭으로 이동
+browser.switch_to.window(browser.window_handles[1])
+
+# 상품 옵션 선택
+visibility_find(wait, "a[aria-haspopup='listbox']")
+options = browser.find_elements(By.CSS_SELECTOR, "a[aria-haspopup='listbox']")
+
+# 첫 번째 옵션에서 두 번째 항목 선택
+options[0].click()
+time.sleep(0.5)
+browser.find_element(By.CSS_SELECTOR, "ul[role=listbox] li:nth-child(2) a[role=option]").click()
+
+# 두 번째 옵션에서 첫 번째 항목 선택
+options[1].click()
+time.sleep(0.5)
+browser.find_element(By.CSS_SELECTOR, "ul[role=listbox] li:first-child a[role=option]").click()
+
+# 구매하기 버튼 클릭
+buy_button = browser.find_element(By.CSS_SELECTOR, "div.sys_chk_buy a")
+buy_button.click()
 
 time.sleep(3)
 
