@@ -113,6 +113,7 @@ def choose_maker(text):
 
 browser.get("https://shop.danawa.com/virtualestimate/?controller=estimateMain&methods=index&marketPlaceSeq=16&logger_kw=dnw_gnb_esti")
 
+########################## cpu ##########################
 # cpu 카테고리 클릭
 change_category("cpu")
 
@@ -149,6 +150,7 @@ else:
     # 조회된 cpu 목록 가져오기기
     products = parse_product()
 
+########################## 메인보드 ##########################
 
 # 메인보드 카테고리 클릭
 change_category("메인보드")
@@ -170,6 +172,7 @@ click_checkbox(chosen_product_classify)
 # 조회된 메인보드 목록 가져오기
 products = parse_product()
 
+########################## 메모리 ##########################
 
 # 메모리 카테고리 클릭
 change_category("메모리")
@@ -183,12 +186,179 @@ use_device_list = [element.text for element in use_device]
 
 chosen_index = choose_one("제품 분류를 골라주세요.", use_device_list)
 chosen_use_device = use_device_list[chosen_index] + " " # 뒤에 공백이 있음
-print(f"선택한 제조사: {chosen_use_device}")
+print(f"선택한 사용장치: {chosen_use_device}")
 
-# 제품 분류 체크박스 클릭
+# 사용 장치 체크박스 클릭
 click_checkbox(chosen_use_device)
 
-# 조회된 메인보드 목록 가져오기
+# 제품 분류 가져오기
+product_classify = visibility_elements_browser("div.search_option_item:nth-child(3) ul.search_cate_list li.search_cate_item span.item_text")
+product_classify_list = [element.text for element in product_classify]
+
+chosen_index = choose_one("제품 분류를 골라주세요.", product_classify_list)
+chosen_product_classify = product_classify_list[chosen_index] + " " # 뒤에 공백이 있음
+print(f"선택한 제품 분류: {chosen_product_classify}")
+
+# 제품 분류 체크박스 클릭
+click_checkbox(chosen_product_classify)
+
+# 메모리 용량 더보기 버튼 클릭
+more_button = visibility_element("div.search_option_item:nth-child(4) button.btn_item_more")
+browser.execute_script("arguments[0].click();", more_button)
+time.sleep(1)
+
+# 메모리 용량 가져오기
+memory_capacity = visibility_elements_browser("div.search_option_item:nth-child(4) ul.search_cate_list li.search_cate_item span.item_text")
+memory_capacity_list = [element.text for element in memory_capacity]
+
+chosen_index = choose_one("메모리 용량을 골라주세요.", memory_capacity_list)
+chosen_memory_capacity = memory_capacity_list[chosen_index] + " " # 뒤에 공백이 있음
+print(f"선택한 메모리 용량: {chosen_memory_capacity}")
+
+# 메모리 용량 체크박스 클릭
+click_checkbox(chosen_memory_capacity)
+
+# 조회된 메모리 목록 가져오기
+products = parse_product()
+
+########################## 그래픽카드 ##########################
+
+# 그래픽카드 카테고리 클릭
+change_category("그래픽카드")
+
+# 그래픽카드 제조사 가져오기
+chosen_maker = choose_maker("그래픽카드 제조사를 골라주세요.")
+
+# 칩셋 제조사 더보기 버튼 클릭
+more_button = visibility_element("div.search_option_item:nth-child(2) button.btn_item_more")
+browser.execute_script("arguments[0].click();", more_button)
+time.sleep(1)
+
+# 칩셋 제조사 가져오기
+chipset_maker = visibility_elements_browser("div.search_option_item:nth-child(2) ul.search_cate_list li.search_cate_item span.item_text")
+chipset_maker_list = [element.text for element in chipset_maker]
+
+chosen_index = choose_one("칩셋 제조사를 골라주세요.", chipset_maker_list)
+chosen_chipset_maker = chipset_maker_list[chosen_index] + " " # 뒤에 공백이 있음
+print(f"선택한 사용장치: {chosen_chipset_maker}")
+
+# 칩셋 제조사 체크박스 클릭
+click_checkbox(chosen_chipset_maker)
+
+# 조회된 그래픽카드 목록 가져오기
+products = parse_product()
+
+########################## ssd ##########################
+
+# ssd 카테고리 클릭
+change_category("ssd")
+
+# ssd 제조사 가져오기
+chosen_maker = choose_maker("ssd 제조사를 골라주세요.")
+
+# 용량 더보기 버튼 클릭
+more_button = visibility_element("div.search_option_item:nth-child(5) button.btn_item_more")
+browser.execute_script("arguments[0].click();", more_button)
+time.sleep(1)
+
+# 용량 가져오기
+ssd_capacity = visibility_elements_browser("div.search_option_item:nth-child(5) ul.search_cate_list li.search_cate_item span.item_text")
+ssd_capacity_list = [element.text for element in ssd_capacity]
+
+chosen_index = choose_one("용량을 골라주세요.", ssd_capacity_list)
+chosen_ssd_capacity = ssd_capacity_list[chosen_index] + " " # 뒤에 공백이 있음
+print(f"선택한 용량: {chosen_ssd_capacity}")
+
+# 용량 체크박스 클릭
+click_checkbox(chosen_ssd_capacity)
+
+# 조회된 ssd 목록 가져오기
+products = parse_product()
+
+########################## 케이스 ##########################
+
+# 케이스 카테고리 클릭
+change_category("케이스")
+
+# 케이스 제조사 가져오기
+chosen_maker = choose_maker("케이스 제조사를 골라주세요.")
+
+# 제품 분류 더보기 버튼 클릭
+more_button = visibility_element("div.search_option_item:nth-child(2) button.btn_item_more")
+browser.execute_script("arguments[0].click();", more_button)
+time.sleep(1)
+
+# 제품 분류 가져오기
+product_classify = visibility_elements_browser("div.search_option_item:nth-child(2) ul.search_cate_list li.search_cate_item span.item_text")
+product_classify_list = [element.text for element in product_classify]
+
+chosen_index = choose_one("제품 분류를 골라주세요.", product_classify_list)
+chosen_product_classify = product_classify_list[chosen_index] + " " # 뒤에 공백이 있음
+print(f"선택한 제품 분류: {chosen_product_classify}")
+
+# 제품 분류 체크박스 클릭
+click_checkbox(chosen_product_classify)
+
+# 조회된 케이스 목록 가져오기
+products = parse_product()
+
+########################## 파워 ##########################
+
+# 파워 카테고리 클릭
+change_category("파워")
+
+# 파워 제조사 가져오기
+chosen_maker = choose_maker("파워 제조사를 골라주세요.")
+
+# 제품 분류 더보기 버튼 클릭
+more_button = visibility_element("div.search_option_item:nth-child(2) button.btn_item_more")
+browser.execute_script("arguments[0].click();", more_button)
+time.sleep(1)
+
+# 제품 분류 가져오기
+product_classify = visibility_elements_browser("div.search_option_item:nth-child(2) ul.search_cate_list li.search_cate_item span.item_text")
+product_classify_list = [element.text for element in product_classify]
+
+chosen_index = choose_one("제품 분류를 골라주세요.", product_classify_list)
+chosen_product_classify = product_classify_list[chosen_index] + " " # 뒤에 공백이 있음
+print(f"선택한 제품 분류: {chosen_product_classify}")
+
+# 제품 분류 체크박스 클릭
+click_checkbox(chosen_product_classify)
+
+# 정격출력 더보기 버튼 클릭
+more_button = visibility_element("div.search_option_item:nth-child(3) button.btn_item_more")
+browser.execute_script("arguments[0].click();", more_button)
+time.sleep(1)
+
+# 정격출력 가져오기
+rated_power = visibility_elements_browser("div.search_option_item:nth-child(3) ul.search_cate_list li.search_cate_item span.item_text")
+rated_power_list = [element.text for element in rated_power]
+
+chosen_index = choose_one("정격출력을 골라주세요.", rated_power_list)
+chosen_rated_power = rated_power_list[chosen_index] + " " # 뒤에 공백이 있음
+print(f"선택한 정격출력: {chosen_rated_power}")
+
+# 정격출력 체크박스 클릭
+click_checkbox(chosen_rated_power)
+
+# 80PLUS인증 더보기 버튼 클릭
+more_button = visibility_element("div.search_option_item:nth-child(4) button.btn_item_more")
+browser.execute_script("arguments[0].click();", more_button)
+time.sleep(1)
+
+# 80PLUS인증 가져오기
+eighty_plus_certification = visibility_elements_browser("div.search_option_item:nth-child(4) ul.search_cate_list li.search_cate_item span.item_text")
+eighty_plus_certification_list = [element.text for element in eighty_plus_certification]
+
+chosen_index = choose_one("80PLUS인증을 골라주세요.", eighty_plus_certification_list)
+chosen_eighty_plus_certification = eighty_plus_certification_list[chosen_index] + " " # 뒤에 공백이 있음
+print(f"선택한 80PLUS인증: {chosen_eighty_plus_certification}")
+
+# 80PLUS인증 체크박스 클릭
+click_checkbox(chosen_eighty_plus_certification)
+
+# 조회된 파워 목록 가져오기
 products = parse_product()
 
 time.sleep(3)
